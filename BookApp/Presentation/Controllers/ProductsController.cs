@@ -25,7 +25,17 @@ namespace Presentation.Controllers
 
         public ProductsController(IServiceManager service) => _service = service;
 
+        
+        [HttpOptions]
+        public async Task<IActionResult> GetProductsOptions([FromQuery] CateogryParameters cateogryparameters)
+        {
+            Response.Headers.Add("Allow", "Post, Get, Options");
+
+            return Ok();
+        }
+
         [HttpGet]
+        [HttpHead]
         [ValidateMediaTypeAttribute]
         public  async Task<IActionResult> GetProducts(int CatgoryId, [FromQuery]ProductParameters productParameters)
         {
