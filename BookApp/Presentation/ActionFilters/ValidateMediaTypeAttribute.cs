@@ -12,7 +12,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace Presentation.ActionFilters
 {
-    public class ValidateMediaTypeAttribute : IActionFilter
+    public class ValidateMediaTypeAttribute : Attribute, IActionFilter
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {

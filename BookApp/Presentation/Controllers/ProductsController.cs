@@ -26,7 +26,7 @@ namespace Presentation.Controllers
         public ProductsController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        [ServiceFilter(typeof(ValidateMediaTypeAttribute))]
+        [ValidateMediaTypeAttribute]
         public  async Task<IActionResult> GetProducts(int CatgoryId, [FromQuery]ProductParameters productParameters)
         {
 

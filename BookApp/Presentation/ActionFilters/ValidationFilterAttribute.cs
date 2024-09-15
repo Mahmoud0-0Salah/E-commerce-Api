@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shared.ActionFilters
 {
-    public class ValidationFilterAttribute : IActionFilter
+    public class ValidationFilterAttribute : Attribute, IActionFilter
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {

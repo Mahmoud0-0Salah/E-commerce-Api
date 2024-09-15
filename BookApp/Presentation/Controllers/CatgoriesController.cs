@@ -21,7 +21,17 @@ namespace BookApp.Controllers
 
         public CatgoriesController(IServiceManager service) => _service = service;
 
+
+        [HttpOptions]
+        public async Task<IActionResult> GetAllCatgoryiesOptions([FromQuery] CateogryParameters cateogryparameters)
+        {
+            Response.Headers.Add("Allow", "Post, Get, Options");
+
+            return Ok();
+        }
+
         [HttpGet]
+        [HttpHead]
         public async Task<IActionResult> GetAllCatgoryies([FromQuery] CateogryParameters cateogryparameters)
         {
             var PageResult = await _service.CatgoryService.GetAllCatgoryiesAsync(false, cateogryparameters);
@@ -45,7 +55,7 @@ namespace BookApp.Controllers
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ValidationFilterAttribute]
         public async Task<IActionResult> CreateCateogry([FromBody] CateogryForCreationDto cateogry)
         {
             var CreatedCateogry = await _service.CatgoryService.CreateCatgoryAsync(cateogry);
@@ -72,7 +82,7 @@ namespace BookApp.Controllers
         }
 
         [HttpPut("{id:int}")]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ValidationFilterAttribute]
         public async Task<IActionResult> UpdateCateogry(int id, [FromBody] CateogryForUpdateDto Cateogry)
         {
             await _service.CatgoryService.UpdateCateogryAsync(id, Cateogry);

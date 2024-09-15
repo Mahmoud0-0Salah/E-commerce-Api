@@ -43,16 +43,16 @@ namespace BookApp
             .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly).AddNewtonsoftJson();
 
 
-                builder.Services.Configure<MvcOptions>(config =>
+            builder.Services.Configure<MvcOptions>(config =>
+            {
+                var systemTextJsonOutputFormatter = config.OutputFormatters
+                .OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
+                if (systemTextJsonOutputFormatter != null)
                 {
-                    var systemTextJsonOutputFormatter = config.OutputFormatters
-                    .OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
-                    if (systemTextJsonOutputFormatter != null)
-                    {
-                        systemTextJsonOutputFormatter.SupportedMediaTypes
-                        .Add("application/vnd.deadpool.hateoas+json");
-                    }
-                });
+                    systemTextJsonOutputFormatter.SupportedMediaTypes
+                    .Add("application/vnd.deadpool.hateoas+json");
+                }
+            });
 
             /*builder.Services.AddControllers(options =>
             {
@@ -84,10 +84,6 @@ namespace BookApp
             });
 
             builder.Services.AddAutoMapper(typeof(Program));
-
-            builder.Services.AddScoped<ValidationFilterAttribute>();
-
-            builder.Services.AddScoped<ValidateMediaTypeAttribute>();
 
             builder.Services.AddScoped<IProductLinks, ProductLinks>();
 
