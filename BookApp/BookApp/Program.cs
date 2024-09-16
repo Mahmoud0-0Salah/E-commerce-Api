@@ -3,19 +3,13 @@ using Repository;
 using Service.Contracts;
 using Service;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.Extensions.Logging;
-using System.Net;
 using Entities.ErrorModel;
 using Entities.Exceptions;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc;
-using Shared.ActionFilters;
-using Presentation.ActionFilters;
 using BookApp.Utility;
-
+using Marvin.Cache.Headers;
 namespace BookApp
 {
     public class Program
@@ -38,7 +32,12 @@ namespace BookApp
 
             builder.Services.AddControllers(c =>
             {
-               //c.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+                //c.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+                c.CacheProfiles.Add("60Age", new CacheProfile
+                {
+                    VaryByQueryKeys = new[] { "*" },
+                    Duration = 60,
+                });
             })
             .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly).AddNewtonsoftJson();
 
@@ -54,14 +53,6 @@ namespace BookApp
                 }
             });
 
-            /*builder.Services.AddControllers(options =>
-            {
-                foreach (var formatter in options.InputFormatters)
-                {
-                    Console.WriteLine($"Formatter Type: {formatter.GetType().FullName}");
-                }
-
-            });*/
 
             builder.Services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -80,12 +71,17 @@ namespace BookApp
                 c.AddPolicy("Test", cu =>
                 {
                     cu.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("X-Pagination");
-            });
-            });
+                });
+               });
 
             builder.Services.AddAutoMapper(typeof(Program));
 
             builder.Services.AddScoped<IProductLinks, ProductLinks>();
+
+            builder.Services.AddResponseCaching(o =>
+            {
+                o.UseCaseSensitivePaths = false;
+            });
 
             var app = builder.Build();
 
@@ -119,9 +115,10 @@ namespace BookApp
             app.UseHttpsRedirection();
 
             app.UseCors("Test");
+        
+            app.UseResponseCaching();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

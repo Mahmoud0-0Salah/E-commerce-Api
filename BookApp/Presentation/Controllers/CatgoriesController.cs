@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Presentation.ModelBinders;
@@ -14,6 +15,7 @@ namespace BookApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class CatgoriesController : ControllerBase
     {
 
@@ -32,6 +34,7 @@ namespace BookApp.Controllers
 
         [HttpGet]
         [HttpHead]
+        [ResponseCache(CacheProfileName = "60Age")]
         public async Task<IActionResult> GetAllCatgoryies([FromQuery] CateogryParameters cateogryparameters)
         {
             var PageResult = await _service.CatgoryService.GetAllCatgoryiesAsync(false, cateogryparameters);
