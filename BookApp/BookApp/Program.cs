@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using BookApp.Utility;
 using Marvin.Cache.Headers;
+using AspNetCoreRateLimit;
 namespace BookApp
 {
     public class Program
@@ -83,6 +84,36 @@ namespace BookApp
                 o.UseCaseSensitivePaths = false;
             });
 
+            builder.Services.AddHttpCacheHeaders(
+            (expirationOpt) => 
+            {
+                expirationOpt.CacheLocation = CacheLocation.Public;
+            }, 
+            (validationOpt) =>
+            {
+                validationOpt.MustRevalidate = true;
+            });
+
+            //////////////// For rate limit //////////////// 
+            builder.Services.Configure<IpRateLimitOptions>(opt => {
+            opt.GeneralRules = new List<RateLimitRule>
+            {
+                new RateLimitRule
+                {
+                Endpoint = "*",
+                Limit = 20,
+                Period = "5m"
+                }
+                };
+            });
+
+            builder.Services.AddSingleton<IRateLimitCounterStore,MemoryCacheRateLimitCounterStore>();
+            builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+            builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -114,10 +145,14 @@ namespace BookApp
 
             app.UseHttpsRedirection();
 
+            app.UseIpRateLimiting();
+
             app.UseCors("Test");
         
             app.UseResponseCaching();
 
+            app.UseHttpCacheHeaders();
+            
             app.UseAuthorization();
 
             app.MapControllers();
