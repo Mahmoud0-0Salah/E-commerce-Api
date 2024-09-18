@@ -1,4 +1,5 @@
 ﻿using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,7 +16,6 @@ namespace BookApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class CatgoriesController : ControllerBase
     {
 

@@ -1,4 +1,5 @@
 ﻿using Entities.LinkModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ namespace Presentation.Controllers
 {
     [Route("api/Catgories/{CatgoryId:int}/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
 
@@ -37,6 +39,7 @@ namespace Presentation.Controllers
         [HttpGet]
         [HttpHead]
         [ValidateMediaTypeAttribute]
+        [ResponseCache(CacheProfileName= "60Age")]
         public  async Task<IActionResult> GetProducts(int CatgoryId, [FromQuery]ProductParameters productParameters)
         {
 

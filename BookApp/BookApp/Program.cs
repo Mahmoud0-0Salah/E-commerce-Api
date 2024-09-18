@@ -11,6 +11,12 @@ using Microsoft.AspNetCore.Mvc;
 using BookApp.Utility;
 using Marvin.Cache.Headers;
 using AspNetCoreRateLimit;
+using Entities.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 namespace BookApp
 {
     public class Program
@@ -94,6 +100,30 @@ namespace BookApp
                 validationOpt.MustRevalidate = true;
             });
 
+            builder.Services.AddIdentity<User, IdentityRole>(o=>
+            {
+                o.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<RepositoryContext>().AddDefaultTokenProviders();
+
+            builder.Services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer = builder.Configuration.GetSection("JWT")["ValidIssuer"],
+                ValidAudience = builder.Configuration.GetSection("JWT")["ValidAudience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWT")["SecretKey"])),
+                };
+            });
+
             //////////////// For rate limit //////////////// 
             builder.Services.Configure<IpRateLimitOptions>(opt => {
             opt.GeneralRules = new List<RateLimitRule>
@@ -145,14 +175,18 @@ namespace BookApp
 
             app.UseHttpsRedirection();
 
-            app.UseIpRateLimiting();
 
             app.UseCors("Test");
         
+            app.UseIpRateLimiting();
+           
             app.UseResponseCaching();
 
             app.UseHttpCacheHeaders();
-            
+
+
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.MapControllers();

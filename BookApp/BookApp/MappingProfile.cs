@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Entities.Models;
 using Shared.DTO;
 using WebApplication1.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BookApp
 {
@@ -22,6 +22,8 @@ namespace BookApp
             CreateMap<ProductForUpdateDto, Product>().ReverseMap();
 
             CreateMap<CateogryForUpdateDto, Cateogry>();
+
+            CreateMap<UserForRegistrationDto, User>();
         }
     }
 }
