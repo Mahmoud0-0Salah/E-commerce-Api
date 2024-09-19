@@ -14,5 +14,6 @@ namespace Shared.DTO
         public string? Email { get; init; }
         [Required(ErrorMessage = "Password name is required")]
         public string? Password { get; init; }
+        public bool rememberMe { get; init; } = false;
     }
 }

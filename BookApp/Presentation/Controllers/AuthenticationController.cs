@@ -41,7 +41,17 @@ namespace Presentation.Controllers
             if (!await _service.AuthenticationService.ValidateUser(userForRegistration))
                 return Unauthorized("Invalid user data");
 
-            return Ok(new { Token = await _service.AuthenticationService.CreateToken() });
+            var res = await _service.AuthenticationService.CreateToken(true, userForRegistration.rememberMe);
+            
+            return Ok(res);
+        }
+
+        [HttpPost("refresh")]
+        [ValidationFilterAttribute]
+        public async Task<IActionResult> Refresh([FromBody] TokenDto tokenDto)
+        {
+            var tokenDtoToReturn = await _service.AuthenticationService.RefreshToken(tokenDto);
+            return Ok(tokenDtoToReturn);
         }
     }
 }
