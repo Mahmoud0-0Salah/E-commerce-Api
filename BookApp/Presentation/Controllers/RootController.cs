@@ -17,6 +17,7 @@ namespace Presentation.Controllers
         private readonly LinkGenerator _linkGenerator;
         public RootController(LinkGenerator linkGenerator)=> _linkGenerator = linkGenerator;
 
+        [HttpGet]
         public IActionResult GetRoot()
         {
 
