@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Repository;
 using System.Text;
 
@@ -93,12 +94,13 @@ namespace BookApp.Extensions
         {
             services.AddHttpCacheHeaders((expirationOpt) =>
             {
-                expirationOpt.MaxAge = 65;
-                expirationOpt.CacheLocation = CacheLocation.Public;
+                expirationOpt.MaxAge = 0;
+                expirationOpt.CacheLocation = CacheLocation.Private;
             },
             (validationOpt) =>
             {
-                validationOpt.MustRevalidate = true;
+                validationOpt.MustRevalidate = false;
+                validationOpt.NoCache = true;
             });
         }
 
@@ -139,7 +141,7 @@ namespace BookApp.Extensions
                 new RateLimitRule
                 {
                     Endpoint = "*",
-                     Limit = 20,
+                     Limit = 50,
                     Period = "5m"
                 }
             };
@@ -150,6 +152,44 @@ namespace BookApp.Extensions
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
         }
+
+
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "BookApp API",
+                    Version = "v1"
+                });
+
+                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Place to add JWT with Bearer",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] {}
+            }
+        });
+            });
+        }
+
 
     }
 }

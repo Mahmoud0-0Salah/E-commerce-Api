@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Shared.RequestFeatures;
 using Repository.Extensions;
 using Entities.Exceptions;
+using Entities.LinkModels;
 
 namespace Repository
 {
@@ -35,7 +36,7 @@ namespace Repository
 
         public async Task<PagedList<Product>> GetProductsWithCateogriesAsync(int CateogryId, bool TrackChanges, ProductParameters productParameters)
         {
-            if (!productParameters.ValidAgeRange)
+            if (productParameters.MaxPrice < productParameters.MinPrice)
                 throw new MaxRangeBadRequestException();
              var products = await FindByCondition(p => p.CateogryId == CateogryId, TrackChanges)
             .Paging(productParameters.PageNumber, productParameters.PageSize)

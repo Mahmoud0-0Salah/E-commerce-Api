@@ -34,7 +34,6 @@ namespace BookApp.Controllers
 
         [HttpGet]
         [HttpHead]
-        [ResponseCache(CacheProfileName = "60Age")]
         public async Task<IActionResult> GetAllCatgoryies([FromQuery] CateogryParameters cateogryparameters)
         {
             var PageResult = await _service.CatgoryService.GetAllCatgoryiesAsync(false, cateogryparameters);

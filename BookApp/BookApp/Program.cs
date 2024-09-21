@@ -5,6 +5,7 @@ using Service;
 using BookApp.Utility;
 using AspNetCoreRateLimit;
 using BookApp.Extensions;
+using Microsoft.OpenApi.Models;
 
 namespace BookApp
 {
@@ -35,6 +36,8 @@ namespace BookApp
             builder.Services.ConfigureIdentity();
 
             builder.Services.ConfigureJWT(builder.Configuration);
+           
+            builder.Services.ConfigureResponseCaching();
 
             builder.Services.ConfigureRateLimitingOptions();
       
@@ -46,10 +49,19 @@ namespace BookApp
 
             builder.Services.AddScoped<IProductLinks, ProductLinks>();
 
+            builder.Services.ConfigureSwagger();
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "BookApp API v1");
+                s.RoutePrefix = string.Empty;
+            });
 
             app.ConfigureExceptionHandler();
 
@@ -58,6 +70,8 @@ namespace BookApp
             app.UseIpRateLimiting();
 
             app.UseResponseCaching();
+
+            app.UseHttpCacheHeaders();
             
             app.UseHttpsRedirection();
          

@@ -1,4 +1,5 @@
 ﻿using Entities.LinkModels;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -20,6 +21,8 @@ namespace Presentation.Controllers
     [Route("api/Catgories/{CatgoryId:int}/[controller]")]
     [ApiController]
     [Authorize]
+    //[HttpCacheExpiration(CacheLocation = CacheLocation.Private, MaxAge = 60)]
+    //[HttpCacheValidation(MustRevalidate = true)]
     public class ProductsController : ControllerBase
     {
 
@@ -39,7 +42,6 @@ namespace Presentation.Controllers
         [HttpGet]
         [HttpHead]
         [ValidateMediaTypeAttribute]
-        [ResponseCache(CacheProfileName= "60Age")]
         public  async Task<IActionResult> GetProducts(int CatgoryId, [FromQuery]ProductParameters productParameters)
         {
 

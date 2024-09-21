@@ -79,7 +79,7 @@ namespace Service
 
         public async Task<(LinkResponse<ProductDto> products, MetaData MetaData)> GetProductsWithCateogriesAsync(int CateogryId, bool TrackChanges, LinkParameters LinkParameters)
         {
-            if (!LinkParameters.ProductParameters.ValidAgeRange)
+            if (LinkParameters.ProductParameters.MaxPrice< LinkParameters.ProductParameters.MinPrice)
                 throw new MaxRangeBadRequestException();
                 
             await CheckIfCateogryExists(CateogryId, TrackChanges);
