@@ -18,10 +18,10 @@ namespace Service
         private readonly Lazy<IProductService> _productService;
         private readonly Lazy<IAuthenticationService> _authentication;
 
-        public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper , IProductLinks productLinks, UserManager<User> userManager, IConfiguration configuration)
+        public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper , IProductLinks productLinks,ICatgoryLinks catgoryLinks, UserManager<User> userManager, IConfiguration configuration)
         {
             _catgoryService = new Lazy<ICatgoryService>(() => new
-          CatgoryService(repositoryManager,mapper));
+          CatgoryService(repositoryManager,mapper,catgoryLinks));
             _productService = new Lazy<IProductService>(() => new
           ProductService(repositoryManager, mapper, productLinks));
             _authentication = new Lazy<IAuthenticationService>(() => new

@@ -13,7 +13,7 @@ namespace Contracts
     public interface IProductService
     {
         Task<IEnumerable<ProductDto>> GetProductsAsync(int CateogryId, bool TrackChanges);
-        Task<(LinkResponse<ProductDto> products, MetaData MetaData)> GetProductsWithCateogriesAsync(int CateogryId, bool TrackChanges, LinkParameters LinkParameters);
+        Task<(LinkResponse<ProductDto> products, MetaData MetaData)> GetProductsWithCateogriesAsync(int CateogryId, bool TrackChanges, LinkParameters<ProductParameters> LinkParameters);
         Task<ProductDto> GetProductWithCateogriesAsync(int CateogryId, int ProductId, bool TrackChanges);
         Task DeleteProductAsync(int CateogryId, int ProductId, bool TrackChanges);
         Task<ProductDto> CreateProductAsync(int CateogryId, ProductForCreationDto product, bool TrackChanges);

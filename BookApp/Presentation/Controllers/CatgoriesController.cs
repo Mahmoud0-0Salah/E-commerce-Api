@@ -1,8 +1,10 @@
-﻿using Marvin.Cache.Headers;
+﻿using Entities.LinkModels;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Presentation.ActionFilters;
 using Presentation.ModelBinders;
 using Service.Contracts;
 using Shared.ActionFilters;
@@ -34,12 +36,15 @@ namespace BookApp.Controllers
 
         [HttpGet]
         [HttpHead]
+        [ValidateMediaTypeAttribute]
         public async Task<IActionResult> GetAllCatgoryies([FromQuery] CateogryParameters cateogryparameters)
         {
-            var PageResult = await _service.CatgoryService.GetAllCatgoryiesAsync(false, cateogryparameters);
+            var linkParams = new LinkParameters<CateogryParameters>(cateogryparameters, HttpContext);
+
+            var PageResult = await _service.CatgoryService.GetAllCatgoryiesAsync(false, linkParams);
             Response.Headers.Add("X-Pagination",JsonSerializer.Serialize(PageResult.MetaData));
 
-            return Ok(PageResult.Catgories);
+            return Ok(PageResult.Catgories.HasLinks ? PageResult.Catgories.LinkedEntities : PageResult.Catgories.Entities);
         }
         [HttpGet("{id:int}", Name = "GetCatgoryById")]
         public async Task<IActionResult> GetCatgoryById(int id)
@@ -77,7 +82,7 @@ namespace BookApp.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteCompany(int id)
+        public async Task<IActionResult> DeleteCatgory(int id)
         {
             await _service.CatgoryService.DeleteCateogryAsync(id, trackChanges: false);
             return NoContent();

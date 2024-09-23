@@ -45,7 +45,7 @@ namespace Presentation.Controllers
         public  async Task<IActionResult> GetProducts(int CatgoryId, [FromQuery]ProductParameters productParameters)
         {
 
-            var linkParams = new LinkParameters(productParameters, HttpContext);
+            var linkParams = new LinkParameters<ProductParameters>(productParameters, HttpContext);
 
             var result = await _service.ProductService.GetProductsWithCateogriesAsync(CatgoryId, false, linkParams);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(result.MetaData));

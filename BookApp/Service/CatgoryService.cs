@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
+using Entities.LinkModels;
 using Shared.DTO;
 using Shared.RequestFeatures;
 using System.ComponentModel.Design;
@@ -12,10 +13,12 @@ namespace Service
     {
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
-        public CatgoryService(IRepositoryManager repository, IMapper mapper)
+        private readonly ICatgoryLinks _catgoryLinks;
+        public CatgoryService(IRepositoryManager repository, IMapper mapper, ICatgoryLinks catgoryLinks)
         {
             _repository = repository;
             _mapper = mapper;
+            _catgoryLinks = catgoryLinks;
         }
 
         private async Task<Cateogry> GetCateogryAndCheckIfItExists(int id, bool trackChanges = true)
@@ -61,13 +64,15 @@ namespace Service
             await _repository.SaveAsync();
         }
 
-        public async Task<(IEnumerable<CateogryDto> Catgories, MetaData MetaData)> GetAllCatgoryiesAsync(bool trackChanges, CateogryParameters cateogryparameters)
+        public async Task<(LinkResponse<CateogryDto> Catgories, MetaData MetaData)> GetAllCatgoryiesAsync(bool trackChanges, LinkParameters<CateogryParameters> cateogryparameters)
         {
-            var CatgoriesWithMetaData = await _repository.Catgory.GetAllCatgoryiesAsync(trackChanges, cateogryparameters);
+            var CatgoriesWithMetaData = await _repository.Catgory.GetAllCatgoryiesAsync(trackChanges, cateogryparameters.Parameters);
 
             var CatgoriesDto = _mapper.Map<IEnumerable<CateogryDto>>(CatgoriesWithMetaData);
 
-            return (Catgories:CatgoriesDto, MetaData:CatgoriesWithMetaData.MetaData);
+            var links = _catgoryLinks.TryGenerateLinks(CatgoriesDto.ToList(), cateogryparameters.Context);
+
+            return (Catgories: links, MetaData:CatgoriesWithMetaData.MetaData);
         }
 
         public async Task<IEnumerable<CateogryDto>> GetByIdsAsync(IEnumerable<int> ids, bool trackChanges)

@@ -1,4 +1,5 @@
-﻿using Shared.DTO;
+﻿using Entities.LinkModels;
+using Shared.DTO;
 using Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Contracts
 {
     public interface ICatgoryService
     {
-        Task<(IEnumerable<CateogryDto> Catgories, MetaData MetaData)> GetAllCatgoryiesAsync(bool trackChanges, CateogryParameters productparameters);
+        Task<(LinkResponse<CateogryDto> Catgories, MetaData MetaData)> GetAllCatgoryiesAsync(bool trackChanges, LinkParameters<CateogryParameters> productparameters);
         Task<CateogryDto> GetCatgoryByIdAsync(int id,bool trackChanges);
         Task<CateogryDto> CreateCatgoryAsync(CateogryForCreationDto cateogry);
         Task<IEnumerable<CateogryDto>> GetByIdsAsync(IEnumerable<int> ids, bool trackChanges);

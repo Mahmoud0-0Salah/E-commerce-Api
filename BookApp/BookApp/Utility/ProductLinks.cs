@@ -52,7 +52,7 @@ namespace BookApp.Utility
 
             var ProductCollection = new LinkCollectionWrapper<LinksForObject<ProductDto>>(ProductWithLinks);
 
-            ProductCollection.Links = CreateLinksForProducts(httpContext, ProductCollection);
+            ProductCollection.Links = CreateLinksForProducts(httpContext);
 
             return new LinkResponse<ProductDto>
             {
@@ -90,7 +90,7 @@ namespace BookApp.Utility
             return links;
         }
 
-        private List<Link> CreateLinksForProducts(HttpContext httpContext, LinkCollectionWrapper<LinksForObject<ProductDto>> employeesWrapper)
+        private List<Link> CreateLinksForProducts(HttpContext httpContext)
         {
             return new List<Link>
              {

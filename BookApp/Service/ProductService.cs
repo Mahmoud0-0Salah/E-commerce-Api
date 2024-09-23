@@ -77,14 +77,14 @@ namespace Service
             return _mapper.Map<IEnumerable<ProductDto>>(Products);
         }
 
-        public async Task<(LinkResponse<ProductDto> products, MetaData MetaData)> GetProductsWithCateogriesAsync(int CateogryId, bool TrackChanges, LinkParameters LinkParameters)
+        public async Task<(LinkResponse<ProductDto> products, MetaData MetaData)> GetProductsWithCateogriesAsync(int CateogryId, bool TrackChanges, LinkParameters<ProductParameters> LinkParameters)
         {
-            if (LinkParameters.ProductParameters.MaxPrice< LinkParameters.ProductParameters.MinPrice)
+            if (LinkParameters.Parameters.MaxPrice< LinkParameters.Parameters.MinPrice)
                 throw new MaxRangeBadRequestException();
                 
             await CheckIfCateogryExists(CateogryId, TrackChanges);
 
-            var ProductsWithMetaData = await _repository.Product.GetProductsWithCateogriesAsync(CateogryId, TrackChanges, LinkParameters.ProductParameters);
+            var ProductsWithMetaData = await _repository.Product.GetProductsWithCateogriesAsync(CateogryId, TrackChanges, LinkParameters.Parameters);
 
             var Products = _mapper.Map<IEnumerable<ProductDto>>(ProductsWithMetaData);
 

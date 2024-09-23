@@ -9,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace Entities.LinkModels
 {
-    public record LinkParameters(ProductParameters ProductParameters, HttpContext Context);
+    public record LinkParameters<T>(T Parameters, HttpContext Context);
 }

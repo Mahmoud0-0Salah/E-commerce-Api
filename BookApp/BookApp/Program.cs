@@ -37,7 +37,7 @@ namespace BookApp
 
             builder.Services.ConfigureJWT(builder.Configuration);
            
-            builder.Services.ConfigureResponseCaching();
+            // builder.Services.ConfigureResponseCaching();
 
             builder.Services.ConfigureRateLimitingOptions();
       
@@ -48,6 +48,8 @@ namespace BookApp
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
             builder.Services.AddScoped<IProductLinks, ProductLinks>();
+
+            builder.Services.AddScoped<ICatgoryLinks, CateogriesLinks>();
 
             builder.Services.ConfigureSwagger();
 
@@ -69,9 +71,9 @@ namespace BookApp
         
             app.UseIpRateLimiting();
 
-            app.UseResponseCaching();
+            //app.UseResponseCaching();
 
-            app.UseHttpCacheHeaders();
+            //app.UseHttpCacheHeaders();
             
             app.UseHttpsRedirection();
          
