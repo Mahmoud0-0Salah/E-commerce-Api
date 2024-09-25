@@ -98,7 +98,7 @@ namespace Presentation.Controllers
         {
             if (patchDoc is null)
                 return BadRequest("patchDoc object sent from client is null.");
-            var result = await _service.ProductService.GetProductForPatchAsync(CatgoryId, id, false);
+            var result = await _service.ProductService.GetProductForPatchAsync(CatgoryId, id, true);
             patchDoc.ApplyTo(result.ProductForUpdate,ModelState);
 
             TryValidateModel(result.ProductForUpdate);

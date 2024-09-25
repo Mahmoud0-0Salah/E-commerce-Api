@@ -15,6 +15,8 @@ namespace BookApp
 
             CreateMap<Product, ProductDto>();
 
+            CreateMap<User, UserDto>();
+
             CreateMap<CateogryForCreationDto, Cateogry>();
 
             CreateMap<ProductForCreationDto, Product>();
@@ -24,6 +26,8 @@ namespace BookApp
             CreateMap<CateogryForUpdateDto, Cateogry>();
 
             CreateMap<UserForRegistrationDto, User>();
+
+            CreateMap<UserDtoForUpdate, User>();
         }
     }
 }

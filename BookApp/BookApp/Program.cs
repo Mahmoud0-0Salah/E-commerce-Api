@@ -6,6 +6,7 @@ using BookApp.Utility;
 using AspNetCoreRateLimit;
 using BookApp.Extensions;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookApp
 {
@@ -16,8 +17,9 @@ namespace BookApp
         {
 
             var builder = WebApplication.CreateBuilder(args);
-            
+
             // Add services to the container.
+
 
             builder.Services.AddeControllers();
 
@@ -29,7 +31,7 @@ namespace BookApp
 
             builder.Services.ConfigureCors();
 
-            builder.Services.ConfigureResponseCaching();
+            //builder.Services.ConfigureResponseCaching();
 
             builder.Services.ConfigureHttpCacheHeaders();
 
@@ -37,8 +39,6 @@ namespace BookApp
 
             builder.Services.ConfigureJWT(builder.Configuration);
            
-            // builder.Services.ConfigureResponseCaching();
-
             builder.Services.ConfigureRateLimitingOptions();
       
             builder.Services.AddAutoMapper(typeof(Program));
@@ -48,6 +48,8 @@ namespace BookApp
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
             builder.Services.AddScoped<IProductLinks, ProductLinks>();
+      
+            builder.Services.AddScoped<IUserLinks, UserLinks>();
 
             builder.Services.AddScoped<ICatgoryLinks, CateogriesLinks>();
 
@@ -71,9 +73,9 @@ namespace BookApp
         
             app.UseIpRateLimiting();
 
-            //app.UseResponseCaching();
+          //  app.UseResponseCaching();
 
-            //app.UseHttpCacheHeaders();
+         //   app.UseHttpCacheHeaders();
             
             app.UseHttpsRedirection();
          

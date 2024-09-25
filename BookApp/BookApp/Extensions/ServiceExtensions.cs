@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
@@ -17,17 +18,18 @@ namespace BookApp.Extensions
     {
         public static void AddeControllers(this IServiceCollection services)
         {
-            /*NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
+            NewtonsoftJsonInputFormatter GetJsonInputFormatter()
             {
                 return new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson()
-            .Services.BuildServiceProvider()
-            .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
-            .OfType<NewtonsoftJsonPatchInputFormatter>().First();
-            }*/
+                    .Services.BuildServiceProvider()
+                    .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
+                    .OfType<NewtonsoftJsonInputFormatter>().Skip(1).First();
+            }
+
 
             services.AddControllers(c =>
             {
-                //c.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+                c.InputFormatters.Insert(0, GetJsonInputFormatter());
                 c.CacheProfiles.Add("60Age", new CacheProfile
                 {
                     VaryByQueryKeys = new[] { "*" },
@@ -41,7 +43,7 @@ namespace BookApp.Extensions
                     Location = ResponseCacheLocation.Client,
                 });
             })
-            .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly).AddNewtonsoftJson();
+            .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
         }
 
         public static void AddCustomMediaTypes(this IServiceCollection services)
@@ -94,13 +96,13 @@ namespace BookApp.Extensions
         {
             services.AddHttpCacheHeaders((expirationOpt) =>
             {
-                expirationOpt.MaxAge = 0;
-                expirationOpt.CacheLocation = CacheLocation.Private;
+                expirationOpt.MaxAge = 60;
+                expirationOpt.CacheLocation = CacheLocation.Public;
             },
             (validationOpt) =>
             {
-                validationOpt.MustRevalidate = false;
-                validationOpt.NoCache = true;
+                validationOpt.MustRevalidate = true;
+              //  validationOpt.NoCache = true;
             });
         }
 

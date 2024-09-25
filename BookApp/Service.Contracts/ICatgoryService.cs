@@ -11,7 +11,7 @@ namespace Contracts
 {
     public interface ICatgoryService
     {
-        Task<(LinkResponse<CateogryDto> Catgories, MetaData MetaData)> GetAllCatgoryiesAsync(bool trackChanges, LinkParameters<CateogryParameters> productparameters);
+        Task<(LinkResponse<CateogryDto> Catgories, MetaData MetaData)> GetAllCatgoryiesAsync(bool trackChanges, LinkParameters<CateogryParameters> cateogryparameters);
         Task<CateogryDto> GetCatgoryByIdAsync(int id,bool trackChanges);
         Task<CateogryDto> CreateCatgoryAsync(CateogryForCreationDto cateogry);
         Task<IEnumerable<CateogryDto>> GetByIdsAsync(IEnumerable<int> ids, bool trackChanges);

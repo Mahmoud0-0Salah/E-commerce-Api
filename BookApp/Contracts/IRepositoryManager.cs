@@ -10,6 +10,8 @@ namespace Contracts
     {
         ICatgoryRepository Catgory { get; }
         IProductRepository Product { get; }
+        IUserRepository User { get; }
+
         Task SaveAsync();
     }
 }

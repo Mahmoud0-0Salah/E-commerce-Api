@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,9 @@ namespace Repository
         private readonly RepositoryContext _repositoryContext;
         private readonly Lazy<IProductRepository> _productRepository;
         private readonly Lazy<ICatgoryRepository> _catgoryRepository;
+        private readonly Lazy<IUserRepository> _userRepository;
 
-        public RepositoryManager(RepositoryContext repositoryContext)
+        public RepositoryManager(RepositoryContext repositoryContext,UserManager<Entities.Models.User> userManager)
         {
             _repositoryContext = repositoryContext;
 
@@ -22,10 +24,14 @@ namespace Repository
 
             _catgoryRepository = new Lazy<ICatgoryRepository>(() => new
           CatgoryRepository(repositoryContext));
+
+            _userRepository = new Lazy<IUserRepository>(() => new
+          UserRepository(repositoryContext,userManager));
         }
 
         public IProductRepository Product => _productRepository.Value;
         public ICatgoryRepository Catgory => _catgoryRepository.Value;
+        public IUserRepository User => _userRepository.Value;
 
         public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
     }
