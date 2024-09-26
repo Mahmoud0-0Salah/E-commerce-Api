@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class UserService : IUserService
+    internal sealed class UserService : IUserService
     {
         private readonly IMapper _mapper;
         private readonly IUserLinks _userLinks;

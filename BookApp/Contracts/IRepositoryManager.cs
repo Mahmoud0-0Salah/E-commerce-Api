@@ -11,7 +11,7 @@ namespace Contracts
         ICatgoryRepository Catgory { get; }
         IProductRepository Product { get; }
         IUserRepository User { get; }
-
+        IOrderRepository Order { get; }
         Task SaveAsync();
     }
 }

@@ -13,6 +13,7 @@ namespace Service.Contracts
         IProductService ProductService { get; }
         IAuthenticationService AuthenticationService { get; }
         IUserService UserService { get; }
+        IOrderService OrderService { get; }
 
     }
 }

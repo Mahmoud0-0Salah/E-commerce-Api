@@ -14,6 +14,7 @@ namespace Repository
         private readonly Lazy<IProductRepository> _productRepository;
         private readonly Lazy<ICatgoryRepository> _catgoryRepository;
         private readonly Lazy<IUserRepository> _userRepository;
+        private readonly Lazy<IOrderRepository> _orderRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext,UserManager<Entities.Models.User> userManager)
         {
@@ -27,11 +28,15 @@ namespace Repository
 
             _userRepository = new Lazy<IUserRepository>(() => new
           UserRepository(repositoryContext,userManager));
+
+            _orderRepository = new Lazy<IOrderRepository>(() => new
+          OrderRepository(repositoryContext));
         }
 
         public IProductRepository Product => _productRepository.Value;
         public ICatgoryRepository Catgory => _catgoryRepository.Value;
         public IUserRepository User => _userRepository.Value;
+        public IOrderRepository Order => _orderRepository.Value;
 
         public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace BookApp.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20240926074155_Add Order and OrderDetails models")]
+    partial class AddOrderandOrderDetailsmodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,8 +41,9 @@ namespace BookApp.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderState")
-                        .HasColumnType("int");
+                    b.Property<string>("OrderState")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TotalPrice")
                         .HasColumnType("int");
@@ -192,13 +196,13 @@ namespace BookApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "04d66dd4-cf52-4791-a7bf-761b083d862d",
+                            Id = "c978a4e8-6507-42b4-816f-4294db4d389a",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "06372b97-aca0-419c-9330-c49dd5740b4f",
+                            Id = "6d801c64-e5c8-4df3-ac34-84b36969e128",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

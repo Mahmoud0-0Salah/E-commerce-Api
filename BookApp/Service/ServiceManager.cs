@@ -18,15 +18,22 @@ namespace Service
         private readonly Lazy<IProductService> _productService;
         private readonly Lazy<IUserService> _useerService;
         private readonly Lazy<IAuthenticationService> _authentication;
+        private readonly Lazy<IOrderService> _orderService;
 
         public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper , IProductLinks productLinks,ICatgoryLinks catgoryLinks, UserManager<User> userManager, IConfiguration configuration,IUserLinks userLinks)
         {
             _catgoryService = new Lazy<ICatgoryService>(() => new
           CatgoryService(repositoryManager,mapper,catgoryLinks));
+
             _productService = new Lazy<IProductService>(() => new
           ProductService(repositoryManager, mapper, productLinks));
+
             _useerService = new Lazy<IUserService>(() => new
           UserService(repositoryManager, mapper, userLinks));
+
+            _orderService = new Lazy<IOrderService>(() => new
+          OrderService(repositoryManager, mapper));
+
             _authentication = new Lazy<IAuthenticationService>(() => new
           AuthenticationService(mapper,userManager,configuration));
         }
@@ -35,6 +42,7 @@ namespace Service
         public IProductService ProductService => _productService.Value;
         public IAuthenticationService AuthenticationService => _authentication.Value;
         public IUserService UserService => _useerService.Value;
+        public IOrderService OrderService => _orderService.Value;
     }
 
 }

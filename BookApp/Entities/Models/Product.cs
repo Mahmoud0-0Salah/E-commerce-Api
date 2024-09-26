@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Entities.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models
@@ -20,6 +21,7 @@ namespace WebApplication1.Models
         [ForeignKey("Cateogry")]
         public int CateogryId { get; set; }
         public  Cateogry Cateogry { get; set; }
+        public ICollection<OrderDetails>? OrderDetails { get; set; }
 
     }
 }

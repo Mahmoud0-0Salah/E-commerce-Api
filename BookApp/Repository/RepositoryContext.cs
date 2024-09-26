@@ -15,6 +15,8 @@ namespace Repository
         public DbSet<Cateogry> Cateogry { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

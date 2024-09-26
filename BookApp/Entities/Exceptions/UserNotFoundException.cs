@@ -8,8 +8,8 @@ namespace Entities.Exceptions
 {
     public class UserNotFoundException : NotFoundException
     {
-        public UserNotFoundException(string CateogryId)
-        : base($"The User with id: {CateogryId} doesn't exist in the database.")
+        public UserNotFoundException(string UserId)
+        : base($"The User with id: {UserId} doesn't exist in the database.")
         {
         }
     }

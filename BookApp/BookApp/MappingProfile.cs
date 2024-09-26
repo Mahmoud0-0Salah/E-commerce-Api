@@ -17,9 +17,15 @@ namespace BookApp
 
             CreateMap<User, UserDto>();
 
+            CreateMap<Order, OrderDto>();
+
             CreateMap<CateogryForCreationDto, Cateogry>();
 
             CreateMap<ProductForCreationDto, Product>();
+
+            CreateMap<OrderForCreationDto, Order>();
+
+            CreateMap<OrderDetailsForCreationDto, OrderDetails>();
 
             CreateMap<ProductForUpdateDto, Product>().ReverseMap();
 
