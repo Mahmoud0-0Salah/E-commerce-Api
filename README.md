@@ -3,22 +3,36 @@ a fully functional E-commerce RESTful API
 
 ## Technologies/Tools Used:
 -ASP.NET Core: Framework for building the API.
+
 -Entity Framework Core (EF Core): For database operations.
+
 -JWT Token Authentication & Authorization: To secure the API.
+
 -DTOs (Data Transfer Objects): For structuring and transferring data.
+
 -Clean Onion Architecture: For structuring the application.
+
 -Generic Repository Pattern: For abstracting database operations.
+
 -AutoMapper: For object-to-object mapping between different layers.
+
 -Service Manager: Custom implementation to organize and manage services.
+
 -Repository Manager: Custom implementation to manage repositories.
 
 ## Key Features of the API:
 -HATEOAS: Enriches responses with links for better navigation.
+
 -Paging: Allows clients to request data in smaller, manageable chunks.
+
 -Filtering: Enables filtering of data based on specific criteria.
+
 -Searching: Allows keyword-based searching within the data.
+
 -Ordering: Enables sorting data based on specified fields.
+
 -Validation: Ensures data integrity by enforcing rules before processing.
+
 -Rate Limiting: Controls the number of requests a client can make in a given timeframe to prevent abuse and ensure fair usage.
 
 
