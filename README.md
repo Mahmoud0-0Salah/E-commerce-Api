@@ -10,7 +10,7 @@ a fully functional E-commerce RESTful API
 
 - DTOs (Data Transfer Objects): For structuring and transferring data.
 
-- Clean Onion Architecture: For structuring the application.
+- Onion Architecture: For structuring the application.
 
 - Generic Repository Pattern: For abstracting database operations.
 
