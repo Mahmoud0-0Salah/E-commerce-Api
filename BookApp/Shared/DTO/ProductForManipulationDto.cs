@@ -16,6 +16,7 @@ namespace Shared.DTO
         [Required(ErrorMessage = "Price is a required field.")]
         [Range(0,int.MaxValue)]
         public int Price { get; set; }
+        public int Amount { get; set; }
 
         public string? Description { get; set; }
 

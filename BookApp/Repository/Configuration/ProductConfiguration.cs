@@ -15,6 +15,7 @@ namespace WebApplication1.Config
             
             builder.Property(p => p.Description).HasColumnType("VARCHAR").HasMaxLength(200).IsRequired(false);
 
+            builder.HasMany(p=>p.OrderDetails).WithOne(p => p.Product).HasForeignKey(o => o.ProductId).OnDelete(DeleteBehavior.Cascade);
 
             // Seed data for Product
             builder.HasData(

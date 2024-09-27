@@ -15,11 +15,14 @@ namespace Contracts
         Task<IEnumerable<ProductDto>> GetProductsAsync(int CateogryId, bool TrackChanges);
         Task<(LinkResponse<ProductDto> products, MetaData MetaData)> GetProductsWithCateogriesAsync(int CateogryId, bool TrackChanges, LinkParameters<ProductParameters> LinkParameters);
         Task<ProductDto> GetProductWithCateogriesAsync(int CateogryId, int ProductId, bool TrackChanges);
+        Task<PagedList<ProductDto>> GetPendingProductsAsync( bool TrackChanges, ProductParameters productParameters);
         Task DeleteProductAsync(int CateogryId, int ProductId, bool TrackChanges);
         Task<ProductDto> CreateProductAsync(int CateogryId, ProductForCreationDto product, bool TrackChanges);
         Task UpdateProductAsync(int CateogryId, int id, ProductForUpdateDto ProductForUpdate, bool TrackChanges);
         Task<(ProductForUpdateDto ProductForUpdate, Product Productntity)> GetProductForPatchAsync(int CateogryId, int id, bool TrackChanges);
         Task SaveChangesForPatchAsync(ProductForUpdateDto ProductForUpdate, Product Productntity);
+
+        Task ChangeProductState(int CateogryId, int id, ProductState productState);
 
     }
 

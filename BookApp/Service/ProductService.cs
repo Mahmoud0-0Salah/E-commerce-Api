@@ -2,6 +2,7 @@
 using Contracts;
 using Entities.Exceptions;
 using Entities.LinkModels;
+using Entities.Models;
 using Shared.DTO;
 using Shared.RequestFeatures;
 using System;
@@ -132,5 +133,30 @@ namespace Service
 
             await _repository.SaveAsync();
         }
+
+        public async Task<PagedList<ProductDto>> GetPendingProductsAsync(bool TrackChanges, ProductParameters productParameters)
+        {
+            if (productParameters.MaxPrice < productParameters.MinPrice)
+                throw new MaxRangeBadRequestException();
+
+            var ProductsWithMetaData = await _repository.Product.GetPendingProductsAsync(TrackChanges,productParameters);
+
+            var Products = _mapper.Map<List<ProductDto>>(ProductsWithMetaData);
+
+            return new PagedList<ProductDto>(Products, ProductsWithMetaData.MetaData.TotalCount, productParameters.PageNumber, productParameters.PageSize);
+        }
+
+        public async Task ChangeProductState(int CateogryId, int id, ProductState productState)
+        {
+            await CheckIfCateogryExists(CateogryId, true);
+
+            var product = await GetProductForCateogryAndCheckIfItExists(CateogryId, id, true);
+
+            product.ProductState = productState;
+
+            await _repository.SaveAsync();
+        }
+
+       
     }
 }

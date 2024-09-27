@@ -42,7 +42,7 @@ namespace Repository
                 .ToListAsync();
 
 
-            var count = await FindByCondition(p => orders.Contains(p), TrackChanges).CountAsync();
+            var count = await FindByCondition(o => o.UserId == UserId, TrackChanges).CountAsync();
 
             return new PagedList<Order>(orders, count, orderablePartitioner.PageNumber, orderablePartitioner.PageSize);
         }

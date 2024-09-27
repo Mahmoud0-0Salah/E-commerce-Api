@@ -49,12 +49,17 @@ namespace Service
 
             foreach (var od in order.OrderDetails)
             {
-                var product = await _repository.Product.GetProductWithCateogriesAsync((int)od.CateogryId, (int)od.ProductId, false);
+                var product = await _repository.Product.GetProductWithCateogriesAsync((int)od.CateogryId, (int)od.ProductId, true);
                 
                 if (product == null)
                     throw new ProductNotFoundException((int)od.ProductId);
 
                 var newOd = newOrder.OrderDetails.Where(od => od.ProductId == product.Id).SingleOrDefault();
+
+                if (newOd.Amount > product.Amount)
+                    throw new NotEnoughAmountException();
+
+                product.Amount -= newOd.Amount;
                 newOd.UnitPrice = product.Price;
                 newOrder.TotalPrice += newOd.UnitPrice * newOd.Amount;
             }
@@ -97,7 +102,7 @@ namespace Service
 
             var res = _mapper.Map<List<OrderDto>>(order);
 
-            return new PagedList<OrderDto>(res, res.Count, orderablePartitioner.PageNumber, orderablePartitioner.PageSize);
+            return new PagedList<OrderDto>(res, order.MetaData.TotalCount, orderablePartitioner.PageNumber, orderablePartitioner.PageSize);
         }
 
         public async Task<OrderDto> GetOrderAsync(string UserId, int OrderId, bool TrackChanges)

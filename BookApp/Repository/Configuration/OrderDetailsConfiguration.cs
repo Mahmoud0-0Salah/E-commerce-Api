@@ -15,9 +15,6 @@ namespace Repository.Configuration
         {
             builder.HasKey(o => new { o.OrderId, o.ProductId });
 
-
-            builder.HasOne(o => o.Product).WithMany(p => p.OrderDetails).HasForeignKey(o => o.ProductId);
-
         }
     }
 }

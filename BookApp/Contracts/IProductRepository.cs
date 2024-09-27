@@ -12,6 +12,7 @@ namespace Contracts
     {
         Task<IEnumerable<Product>> GetProductsAsync(int CateogryId,bool TrackChanges);
         Task<PagedList<Product>> GetProductsWithCateogriesAsync(int CateogryId,bool TrackChanges, ProductParameters productParameters);
+        Task<PagedList<Product>> GetPendingProductsAsync(bool TrackChanges, ProductParameters productParameters);
         Task<Product> GetProductWithCateogriesAsync(int CateogryId, int ProductId, bool TrackChanges);
         void CreateProduct(int CateogryId, Product product);
         void DeleteProduct(Product product);

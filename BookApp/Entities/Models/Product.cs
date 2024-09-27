@@ -1,9 +1,17 @@
 ﻿using Entities.Models;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models
 {
+
+    public enum ProductState
+    {
+        Pending,
+        Accepted,
+        Cancelled
+    }
     public class Product
     {
         [Key]
@@ -16,7 +24,13 @@ namespace WebApplication1.Models
         public  int Price { get; set; }
 
         [Required]
+        public int Amount { get; set; }
+
+        [Required]
         public string? Description { get; set; }
+       
+        [Required]
+        public ProductState ProductState { get; set; }
 
         [ForeignKey("Cateogry")]
         public int CateogryId { get; set; }

@@ -24,10 +24,25 @@ namespace Repository
         public void CreateProduct(int CateogryId, Product product)
         {
             product.CateogryId = CateogryId;
+            product.ProductState = ProductState.Pending;
             Create(product);
         }
 
         public void DeleteProduct(Product product) => Delete(product);
+
+        public async Task<PagedList<Product>> GetPendingProductsAsync( bool TrackChanges, ProductParameters productParameters)
+        {
+            var products = await FindByCondition( p => p.ProductState == ProductState.Pending && p.Amount > 0, TrackChanges)
+           .Paging(productParameters.PageNumber, productParameters.PageSize)
+           .Filter(productParameters.MinPrice, productParameters.MaxPrice)
+           .Search(productParameters.searchTerm)
+           .Sort(productParameters.ordereby)
+           .ToListAsync();
+
+            var count = await FindByCondition((p => p.ProductState == ProductState.Pending && p.Amount > 0), TrackChanges).CountAsync();
+
+            return new PagedList<Product>(products, count, productParameters.PageNumber, productParameters.PageSize);
+        }
 
         public async Task<IEnumerable<Product>> GetProductsAsync(int CateogryId, bool TrackChanges)
         {
@@ -36,9 +51,8 @@ namespace Repository
 
         public async Task<PagedList<Product>> GetProductsWithCateogriesAsync(int CateogryId, bool TrackChanges, ProductParameters productParameters)
         {
-            if (productParameters.MaxPrice < productParameters.MinPrice)
-                throw new MaxRangeBadRequestException();
-             var products = await FindByCondition(p => p.CateogryId == CateogryId, TrackChanges)
+         
+             var products = await FindByCondition(p => p.CateogryId == CateogryId && p.ProductState == ProductState.Accepted && p.Amount > 0, TrackChanges)
             .Paging(productParameters.PageNumber, productParameters.PageSize)
             .Filter(productParameters.MinPrice, productParameters.MaxPrice)
             .Search(productParameters.searchTerm)
@@ -46,7 +60,7 @@ namespace Repository
             .ToListAsync();
 
 
-            var count = await FindByCondition(p => products.Contains(p), TrackChanges).CountAsync();
+            var count = await FindByCondition((p => p.CateogryId == CateogryId), TrackChanges).CountAsync();
 
             return new PagedList<Product>(products, count, productParameters.PageNumber, productParameters.PageSize);
         }
