@@ -162,7 +162,7 @@ namespace BookApp.Extensions
             {
                 s.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "BookApp API",
+                    Title = "E-commerce-Api",
                     Version = "v1"
                 });
 

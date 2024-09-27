@@ -63,7 +63,7 @@ namespace BookApp
 
             app.UseSwaggerUI(s =>
             {
-                s.SwaggerEndpoint("/swagger/v1/swagger.json", "BookApp API v1");
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "E-commerce-Api v1");
                 s.RoutePrefix = string.Empty;
             });
 

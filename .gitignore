@@ -1,33 +1,33 @@
-BookApp/BookApp/.vs
-BookApp/BookApp/bin
-BookApp/BookApp/obj
+E-commerce-Api/E-commerce-Api/.vs
+E-commerce-Api/E-commerce-Api/bin
+E-commerce-Api/E-commerce-Api/obj
 
-BookApp/Contracts/.vs
-BookApp/Contracts/bin
-BookApp/Contracts/obj
-
-
-BookApp/Entities/.vs
-BookApp/Entities/bin
-BookApp/Entities/obj
+E-commerce-Api/Contracts/.vs
+E-commerce-Api/Contracts/bin
+E-commerce-Api/Contracts/obj
 
 
-BookApp/Presentation/.vs
-BookApp/Presentation/bin
-BookApp/Presentation/obj
+E-commerce-Api/Entities/.vs
+E-commerce-Api/Entities/bin
+E-commerce-Api/Entities/obj
 
-BookApp/Repository/.vs
-BookApp/Repository/bin
-BookApp/Repository/obj
 
-BookApp/Service/.vs
-BookApp/Service/bin
-BookApp/Service/obj
+E-commerce-Api/Presentation/.vs
+E-commerce-Api/Presentation/bin
+E-commerce-Api/Presentation/obj
 
-BookApp/Service.Contracts/.vs
-BookApp/Service.Contracts/bin
-BookApp/Service.Contracts/obj
+E-commerce-Api/Repository/.vs
+E-commerce-Api/Repository/bin
+E-commerce-Api/Repository/obj
 
-BookApp/Shared/.vs
-BookApp/Shared/bin
-BookApp/Shared/obj
+E-commerce-Api/Service/.vs
+E-commerce-Api/Service/bin
+E-commerce-Api/Service/obj
+
+E-commerce-Api/Service.Contracts/.vs
+E-commerce-Api/Service.Contracts/bin
+E-commerce-Api/Service.Contracts/obj
+
+E-commerce-Api/Shared/.vs
+E-commerce-Api/Shared/bin
+E-commerce-Api/Shared/obj

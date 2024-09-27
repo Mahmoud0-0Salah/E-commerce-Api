@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookApp", "BookApp.csproj", "{BB32C36A-4E45-490D-9DEC-5C0B5E893A4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-commerce-Api", "E-commerce-Api.csproj", "{BB32C36A-4E45-490D-9DEC-5C0B5E893A4A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "..\Entities\Entities.csproj", "{DBF23C45-FFBD-44AE-9C03-AD6CE8E88C9D}"
 EndProject
