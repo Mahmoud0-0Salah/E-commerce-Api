@@ -17,7 +17,7 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize(Roles ="Admin")]
     public class AdminsController : ControllerBase
     {
         IServiceManager _serviceManager;
@@ -27,7 +27,6 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        [ValidateMediaTypeAttribute]
         public async Task<IActionResult> GetPendingProducts([FromQuery] ProductParameters productParameters)
         {
             var PageResult = await _serviceManager.ProductService.GetPendingProductsAsync(false, productParameters);

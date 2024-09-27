@@ -20,7 +20,7 @@ namespace Presentation.Controllers
 {
     [Route("api/Catgories/{CatgoryId:int}/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles ="User")]
     //[HttpCacheExpiration(CacheLocation = CacheLocation.Private, MaxAge = 60)]
     //[HttpCacheValidation(MustRevalidate = true)]
     public class ProductsController : ControllerBase

@@ -37,10 +37,21 @@ namespace Repository
 
         public async Task<PagedList<User>> GetAllUsersAsync(bool TrackCahnges, UserParameters userParameters)
         {
-            var Res =  await (TrackCahnges ? _userManager.Users.Paging(userParameters.PageNumber,userParameters.PageSize).ToListAsync() : _userManager.Users.AsNoTracking().Paging(userParameters.PageNumber, userParameters.PageSize).ToListAsync());
+            var Res =  await (TrackCahnges ? _userManager.Users.Paging(userParameters.PageNumber,userParameters.PageSize).ToListAsync() :
+                _userManager.Users.AsNoTracking().Paging(userParameters.PageNumber, userParameters.PageSize).ToListAsync());
+
+           List<User> users = new List<User>();
+
+            foreach (var user in Res)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                if (!roles.Contains("Admin"))
+                    users.Add(user);
+            }
+
             var Count = await _userManager.Users.AsNoTracking().Paging(userParameters.PageNumber, userParameters.PageSize).CountAsync();
 
-            return new PagedList<User>(Res, Count, userParameters.PageNumber, userParameters.PageSize);
+            return new PagedList<User>(users, Count, userParameters.PageNumber, userParameters.PageSize);
         }
 
         public async Task<User> GetUserAsync(string id)
