@@ -26,7 +26,7 @@ namespace Presentation.Controllers
             _serviceManager = serviceManager;
         }
 
-        [HttpGet]
+        [HttpGet("pending-products")]
         public async Task<IActionResult> GetPendingProducts([FromQuery] ProductParameters productParameters)
         {
             var PageResult = await _serviceManager.ProductService.GetPendingProductsAsync(false, productParameters);
@@ -36,7 +36,7 @@ namespace Presentation.Controllers
             return Ok(PageResult);
         }
 
-        [HttpPut("{cateogryId}/{productId}")]
+        [HttpPut("{cateogryId}/products/{productId}")]
         public async Task<IActionResult> ChangeProductState(int cateogryId, int productId, [FromQuery] string productState)
         {
             if (!Enum.TryParse<ProductState>(productState, true, out var parsedState))

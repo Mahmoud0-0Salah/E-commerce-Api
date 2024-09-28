@@ -143,8 +143,8 @@ namespace BookApp.Extensions
                 new RateLimitRule
                 {
                     Endpoint = "*",
-                     Limit = 50,
-                    Period = "5m"
+                     Limit = 100,
+                    Period = "1m"
                 }
             };
 
