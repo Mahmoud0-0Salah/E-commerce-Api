@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
-    [Route("api/Users/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Delivery")]
     public class DeliveryController :  ControllerBase
@@ -23,7 +23,7 @@ namespace Presentation.Controllers
             _serviceManager = serviceManager;
         }
 
-        [HttpPut("{UserId}/{OrderId}")]
+        [HttpPut("{UserId}/Orders/{OrderId}")]
         public async Task<IActionResult> ChangeOrderState(string UserId, int OrderId, [FromQuery] string orderState)
         {
             if (!Enum.TryParse<OrderState>(orderState, true, out var parsedState))
