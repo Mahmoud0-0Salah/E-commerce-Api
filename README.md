@@ -40,8 +40,8 @@ a fully functional E-commerce RESTful API
 
 
 ## Screenshots
-![Capture5](https://github.com/user-attachments/assets/68b09f05-ec58-43c1-b296-0de39452ed11)
-![Capture2](https://github.com/user-attachments/assets/4c4876c4-3e8c-4fcb-939f-a7b93121b59b)
-![Capture](https://github.com/user-attachments/assets/de737eeb-067b-4fae-9bbb-d5bd7cab6687)
-![Capture3](https://github.com/user-attachments/assets/ef2c9321-2e34-47a0-a36a-13430b766549)
+![1](https://github.com/user-attachments/assets/9a73adea-d4a4-4699-8dbc-d3e1ed395820)
+![2](https://github.com/user-attachments/assets/106b439a-1f62-4efd-be51-b821dd5ad527)
+![3](https://github.com/user-attachments/assets/65a410d7-0398-49b1-94be-b5bd48b6a8c6)
+
 
