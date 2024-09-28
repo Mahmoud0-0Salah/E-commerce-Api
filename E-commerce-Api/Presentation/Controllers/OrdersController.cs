@@ -35,16 +35,6 @@ namespace Presentation.Controllers
 
         }
 
-        [HttpPut("{OrderId}")]
-        public async Task<IActionResult> ChangeOrderState(string UserId, int OrderId, [FromQuery] string orderState)
-        {
-            if (!Enum.TryParse<OrderState>(orderState, true, out var parsedState))
-            {
-                return BadRequest("Invalid order state.");
-            }
-            await _serviceManager.OrderService.ChangeOrderState(UserId, OrderId, parsedState);
-            return Ok();
-        }
 
         [HttpGet]
         public async Task<IActionResult> GetAllOrders(string UserId ,[FromQuery] OrderParameters orderParameters)

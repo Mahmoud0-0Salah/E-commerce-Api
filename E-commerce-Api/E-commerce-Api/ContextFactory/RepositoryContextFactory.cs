@@ -15,7 +15,7 @@ namespace BookApp.ContextFactory
 
             var builder = new DbContextOptionsBuilder<RepositoryContext>()
                         .UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                        b => b.MigrationsAssembly("BookApp"));
+                        b => b.MigrationsAssembly("E-commerce-Api"));
 
             return new RepositoryContext(builder.Options);
         }

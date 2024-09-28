@@ -91,6 +91,15 @@ namespace Service
             await _repository.SaveAsync();
         }
 
+        public async Task<PagedList<OrderDto>> GetAllDeliveredOrdersAsync(OrderParameters orderablePartitioner, bool TrackChanges)
+        {
+            var order = await _repository.Order.GetAllDeliveredOrdersAsync( orderablePartitioner, false);
+
+            var res = _mapper.Map<List<OrderDto>>(order);
+
+            return new PagedList<OrderDto>(res, order.MetaData.TotalCount, orderablePartitioner.PageNumber, orderablePartitioner.PageSize);
+        }
+
         public async Task<PagedList<OrderDto>> GetAllOrdersAsync(string UserId, OrderParameters orderablePartitioner, bool TrackChanges)
         {
             var user = await _repository.User.GetUserAsync(UserId);
@@ -99,6 +108,24 @@ namespace Service
                 throw new UserNotFoundException(UserId);
 
             var order = await _repository.Order.GetAllOrdersAsync(UserId, orderablePartitioner, false);
+
+            var res = _mapper.Map<List<OrderDto>>(order);
+
+            return new PagedList<OrderDto>(res, order.MetaData.TotalCount, orderablePartitioner.PageNumber, orderablePartitioner.PageSize);
+        }
+
+        public async Task<PagedList<OrderDto>> GetAllPendingOrdersAsync(OrderParameters orderablePartitioner, bool TrackChanges)
+        {
+            var order = await _repository.Order.GetAllPendingOrdersAsync(orderablePartitioner, false);
+
+            var res = _mapper.Map<List<OrderDto>>(order);
+
+            return new PagedList<OrderDto>(res, order.MetaData.TotalCount, orderablePartitioner.PageNumber, orderablePartitioner.PageSize);
+        }
+
+        public async Task<PagedList<OrderDto>> GetAllShippedOrdersAsync(OrderParameters orderablePartitioner, bool TrackChanges)
+        {
+            var order = await _repository.Order.GetAllShippedOrdersAsync(orderablePartitioner, false);
 
             var res = _mapper.Map<List<OrderDto>>(order);
 

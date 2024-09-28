@@ -23,6 +23,11 @@ namespace Repository.Configuration
                 {
                     Name = "Admin",
                     NormalizedName = "ADMIN"
+                },
+                new IdentityRole
+                {
+                    Name = "Delivery",
+                    NormalizedName = "DELIVERY"
                 }
             );
         }
